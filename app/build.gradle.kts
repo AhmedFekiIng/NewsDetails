@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("kotlin-android")
     id("kotlin-kapt")
+    kotlin("plugin.serialization") version "1.6.10"
 }
 
 android {
@@ -54,6 +55,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.0")
     implementation("com.google.accompanist:accompanist-glide:0.10.0")
     implementation("androidx.compose.runtime:runtime-livedata:1.6.0")
+    implementation("androidx.navigation:navigation-compose:2.8.0-alpha01")
     implementation(project(mapOf("path" to ":app:data")))
     implementation(project(mapOf("path" to ":app:domain")))
     testImplementation("junit:junit:4.13.2")

@@ -8,7 +8,8 @@ import com.example.domain.model.News
 import com.example.domain.repository.NewsRepository
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import org.koin.java.KoinJavaComponent
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 import org.koin.java.KoinJavaComponent.inject
 
 
@@ -34,8 +35,8 @@ class NewsViewModel : ViewModel() {
         viewModelScope.launch {
             _loading.value = true
             try {
-                val news = newsRepository.getTopHeadlines("us")
-                newsListState.value = news
+                val response = newsRepository.getTopHeadlines("us")
+                newsListState.value = response
             } catch (e: Exception) {
                 Log.e("NewsViewModel", "Error fetching top headlines", e)
                 _error.value = e.message

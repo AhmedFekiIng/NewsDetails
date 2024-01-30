@@ -1,4 +1,4 @@
-package com.example.newsreaderapp
+package com.example.newsreaderapp.uikit
 
 import android.content.Intent
 import android.net.Uri
@@ -18,8 +18,7 @@ import com.example.domain.model.News
 
 @Composable
 fun NewsDetailScreen(
-    news: News
-) {
+newsDetail: News) {
     val context = LocalContext.current
 
     Column(
@@ -30,12 +29,12 @@ fun NewsDetailScreen(
         horizontalAlignment = Alignment.Start
     ) {
         Text(
-            text = news.title,
+            text = newsDetail.title,
             modifier = Modifier.padding(bottom = 8.dp),
             style = MaterialTheme.typography.h5
         )
         Image(
-            painter = rememberGlidePainter(news.imageUrl),
+            painter = rememberGlidePainter(newsDetail.imageUrl),
             contentDescription = null,
             modifier = Modifier
                 .height(200.dp)
@@ -44,7 +43,7 @@ fun NewsDetailScreen(
             contentScale = ContentScale.FillWidth
         )
         Text(
-            text = news.description,
+            text = newsDetail.description,
             style = MaterialTheme.typography.body1,
             modifier = Modifier.padding(bottom = 8.dp)
         )
@@ -53,7 +52,7 @@ fun NewsDetailScreen(
             style = MaterialTheme.typography.body2,
             color = MaterialTheme.colors.primary,
             modifier = Modifier.clickable {
-                val uri = Uri.parse(news.url)
+                val uri = Uri.parse(newsDetail.url)
                 val intent = Intent(Intent.ACTION_VIEW, uri)
                 context.startActivity(intent)
             }

@@ -1,6 +1,7 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    kotlin("plugin.serialization") version "1.6.10"
 }
 
 android {
@@ -8,12 +9,7 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        //applicationId = "com.example.domain"
         minSdk = 26
-        //targetSdk = 34
-        //versionCode = 1
-        //versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
