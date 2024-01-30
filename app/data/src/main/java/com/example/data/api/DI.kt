@@ -22,7 +22,10 @@ fun createNewsApiService(): NewsApiService {
     return retrofit.create(NewsApiService::class.java)
 }
 
-val dataModule = module {
+val networkModule = module {
     single { createNewsApiService() }
+}
+
+val repositoryModule = module {
     single<NewsRepository> { NewsRepositoryImpl(get()) }
 }

@@ -14,11 +14,10 @@ import androidx.navigation.NavController
 import com.example.newsreaderapp.viewmodel.NewsViewModel
 
 @Composable
-fun NewsListScreen(navController: NavController) {
-    val newsViewModel: NewsViewModel = viewModel()
-    val newsListState by newsViewModel.newsListState.observeAsState()
-    val loading by newsViewModel.loading.observeAsState(initial = false)
-    val error by newsViewModel.error.observeAsState(initial = "")
+fun NewsListScreen(navController: NavController, viewModel: NewsViewModel = viewModel()) {
+    val newsListState by viewModel.newsListState.observeAsState()
+    val loading by viewModel.loading.observeAsState(initial = false)
+    val error by viewModel.error.observeAsState(initial = "")
 
     if (loading) {
         CircularProgressIndicator()
