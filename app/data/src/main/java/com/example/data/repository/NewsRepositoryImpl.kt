@@ -15,7 +15,7 @@ class NewsRepositoryImpl(private val newsApi: NewsApiService) : NewsRepository {
                         title = article.title,
                         imageUrl = article.imageUrl ?: "",
                         description = article.description ?: "",
-                        articleUrl = article.articleUrl
+                        url = article.url
                     )
                 } ?: emptyList()
             } else {

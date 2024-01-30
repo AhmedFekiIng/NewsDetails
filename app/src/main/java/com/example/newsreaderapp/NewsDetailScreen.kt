@@ -53,7 +53,7 @@ fun NewsDetailScreen(
             style = MaterialTheme.typography.body2,
             color = MaterialTheme.colors.primary,
             modifier = Modifier.clickable {
-                val uri = Uri.parse(news.articleUrl)
+                val uri = Uri.parse(news.url)
                 val intent = Intent(Intent.ACTION_VIEW, uri)
                 context.startActivity(intent)
             }
