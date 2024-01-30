@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="newsListScreen">
+
+    <composable
+        android:id="@+id/NewsListScreen"
+        android:name="com.example.presentation.ui.NewsListScreen"
+        android:label="News List">
+        <action
+            android:id="@+id/action_newsListScreen_to_newsDetailScreen"
+            app:destination="@id/NewsDetailScreen" />
+    </composable>
+
+    <composable
+        android:id="@+id/NewsDetailScreen"
+        android:name="com.example.presentation.ui.NewsDetailScreen"
+        android:label="News Detail" />
+
+</navigation>
