@@ -7,7 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.domain.model.News
 import com.example.newsreaderapp.uikit.NewsDetailScreen
 import com.example.newsreaderapp.uikit.NewsListScreen
 
@@ -28,11 +27,9 @@ fun MyApp() {
         composable("newsListScreen") {
             NewsListScreen(navController = navController)
         }
-        composable("newsDetailScreen") {
-            val newsDetail = it.arguments?.getSerializable("newsDetail") as? News
-            if (newsDetail != null) {
-                NewsDetailScreen(newsDetail)
-            }
+        composable("newsDetailScreen/{index}") { backStackEntry ->
+            val index = backStackEntry.arguments?.getString("index")?.toIntOrNull()
+            index?.let { NewsDetailScreen(it) }
         }
     }
 }

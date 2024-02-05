@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import org.koin.java.KoinJavaComponent.inject
 
 
-class NewsViewModel() : ViewModel() {
+class NewsViewModel : ViewModel() {
 
     private val newsRepository: NewsRepository by inject(NewsRepository::class.java)
     private val context: Context by inject(Context::class.java)
@@ -25,12 +25,9 @@ class NewsViewModel() : ViewModel() {
 
     val newsListState = MutableLiveData<List<News>>()
 
-    init {
-        Log.d("NewsViewModel", "NewsViewModel initialized")
-        fetchTopHeadlines()
-    }
+    val newsState = MutableLiveData<News?>()
 
-    private fun fetchTopHeadlines() {
+    fun fetchTopHeadlines() {
         Log.d("NewsViewModel", "Fetching top headlines")
         viewModelScope.launch {
             _loading.value = true
@@ -44,6 +41,24 @@ class NewsViewModel() : ViewModel() {
             } finally {
                 _loading.value = false
                 Log.d("NewsViewModel", "Top headlines fetching completed")
+            }
+        }
+    }
+
+    fun fetchNews(item: Int) {
+        Log.d("NewsViewModel", "Fetching News")
+        viewModelScope.launch {
+            _loading.value = true
+            try {
+                val countryCode = getCountryCodeFromLocale()
+                val response = newsRepository.getNews(countryCode, item)
+                newsState.value = response
+            } catch (e: Exception) {
+                Log.e("NewsViewModel", "Error fetching News", e)
+                _error.value = e.message
+            } finally {
+                _loading.value = false
+                Log.d("NewsViewModel", "News fetching completed")
             }
         }
     }

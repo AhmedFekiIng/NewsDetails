@@ -1,6 +1,7 @@
 package com.example.data.repository
 
 import android.content.Context
+import android.util.Log
 import com.example.data.api.NewsApiService
 import com.example.domain.model.News
 import com.example.domain.repository.NewsRepository
@@ -33,6 +34,20 @@ class NewsRepositoryImpl(private val context: Context, private val newsApi: News
             }
         } catch (e: Exception) {
             throw IOException("Error fetching top headlines: ${e.message}", e)
+        }
+    }
+
+    override suspend fun getNews(country: String, item: Int): News? {
+        return try {
+            val allNews = getTopHeadlines(country)
+            if (item in allNews.indices) {
+                return allNews[item]
+            } else {
+                null
+            }
+        } catch (e: Exception) {
+            Log.e("DeviceRepositoryImpl", "Error fetching device: ${e.message}")
+            null
         }
     }
 }

@@ -2,10 +2,11 @@ package com.example.newsreaderapp.uikit
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -22,6 +23,9 @@ fun NewsListScreen(navController: NavController, viewModel: NewsViewModel = view
     val error by viewModel.error.observeAsState(initial = "")
     val selectedNews = remember { mutableStateOf<News?>(null) }
 
+    LaunchedEffect(Unit) {
+        viewModel.fetchTopHeadlines()
+    }
 
     if (loading) {
         CircularProgressIndicator()
@@ -30,15 +34,16 @@ fun NewsListScreen(navController: NavController, viewModel: NewsViewModel = view
     } else {
         val newsList = newsListState ?: emptyList()
         LazyColumn {
-            items(newsList) { news ->
+            itemsIndexed(newsList) { index, news ->
                 Text(
                     text = news.title,
                     modifier = Modifier.clickable {
                         selectedNews.value = News(news.title, news.description, news.imageUrl,news.url)
-                        navController.navigate("newsDetailScreen")
+                        navController.navigate("newsDetailScreen/$index")
                     }
                 )
             }
         }
+
     }
 }
