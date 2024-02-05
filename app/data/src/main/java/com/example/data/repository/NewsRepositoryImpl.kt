@@ -1,14 +1,24 @@
 package com.example.data.repository
 
+import android.content.Context
 import com.example.data.api.NewsApiService
 import com.example.domain.model.News
 import com.example.domain.repository.NewsRepository
 import java.io.IOException
+import java.util.Properties
 
-class NewsRepositoryImpl(private val newsApi: NewsApiService) : NewsRepository {
+class NewsRepositoryImpl(private val context: Context, private val newsApi: NewsApiService) : NewsRepository {
+    private val apiKey: String
+    init {
+        val properties = Properties().apply {
+            load(context.assets.open("api.properties"))
+        }
+        apiKey = properties.getProperty("api_key")
+    }
+
     override suspend fun getTopHeadlines(country: String): List<News> {
         return try {
-            val response = newsApi.getTopHeadlines(country,"ddd8651a2e9640519be0de205e9cc36b")
+            val response = newsApi.getTopHeadlines(country,apiKey)
             if (response.isSuccessful) {
                 response.body()?.articles?.map { article ->
                     News(

@@ -1,5 +1,6 @@
 package com.example.newsreaderapp.viewmodel
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,14 +9,13 @@ import com.example.domain.model.News
 import com.example.domain.repository.NewsRepository
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.json.Json
 import org.koin.java.KoinJavaComponent.inject
 
 
-class NewsViewModel : ViewModel() {
+class NewsViewModel() : ViewModel() {
 
     private val newsRepository: NewsRepository by inject(NewsRepository::class.java)
+    private val context: Context by inject(Context::class.java)
 
     private val _error = MutableLiveData<String>()
     val error: LiveData<String> = _error
@@ -35,7 +35,8 @@ class NewsViewModel : ViewModel() {
         viewModelScope.launch {
             _loading.value = true
             try {
-                val response = newsRepository.getTopHeadlines("us")
+                val countryCode = getCountryCodeFromLocale()
+                val response = newsRepository.getTopHeadlines(countryCode)
                 newsListState.value = response
             } catch (e: Exception) {
                 Log.e("NewsViewModel", "Error fetching top headlines", e)
@@ -46,4 +47,8 @@ class NewsViewModel : ViewModel() {
             }
         }
     }
+    private fun getCountryCodeFromLocale(): String {
+        return context.resources.configuration.locales[0].country
+    }
+
 }

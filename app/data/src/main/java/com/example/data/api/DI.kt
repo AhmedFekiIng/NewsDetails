@@ -27,5 +27,5 @@ val networkModule = module {
 }
 
 val repositoryModule = module {
-    single<NewsRepository> { NewsRepositoryImpl(get()) }
+    single<NewsRepository> { NewsRepositoryImpl(get(),get()) }
 }

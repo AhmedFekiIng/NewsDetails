@@ -16,8 +16,6 @@ import retrofit2.Response
 import java.io.IOException
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-
-
 class NewsRepositoryImplTest {
 
     @Mock
@@ -25,9 +23,6 @@ class NewsRepositoryImplTest {
 
     lateinit var newsRepository: NewsRepositoryImpl
 
-    fun setup() {
-        newsRepository = NewsRepositoryImpl(newsApiService)
-    }
     val article = Article(
         source = NewsSource("", ""),
         author = "John Doe",
